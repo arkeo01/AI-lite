@@ -1,0 +1,30 @@
+Procedure that is followed while creating the app:
+1. Identify the major components
+2. Declare it in the App.js file and start on building it.
+3. Decide a suitable project files structure.
+
+Building navigation:
+1. Notice how just a very basic p tag is built first in the components  
+    Hence, build the most basic component that can be built instead of focusing on styling from the beginning
+2. Set very basic styling to map out the layout of the project and to justify the functionality of the component.
+
+Installing tachyons: Such packages for quick styling of the react apps can be used for saving the time in styling of the apps.
+    Import tachyons only in the index.js file to use it throughout all the components
+
+Buiding Logo:
+1. Logo folder and Logo.js file.
+Rest similar to Navigation
+
+Installing React Tilt packages
+    The beauty of react and npm is that you can find out a lot of packages and install it to get premade functionalities.
+Using Tilt in the Logo
+
+Building ImageLinkForm:
+1. Initiation same as the above 2
+2. Adding basic html and styling using tachyons and css
+
+Building the rank component:
+1. Initiation same as the above
+
+
+
