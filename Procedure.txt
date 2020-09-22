@@ -27,4 +27,25 @@ Building the rank component:
 1. Initiation same as the above
 
 
+ADDING FUNCTIONALITY IN THE App
+1. Adding the input detection functionality in the Imagelinkform:
+    Create state
+    Define function to detect and console log the change event in the input field
+
+2. Adding functionality in the Detect Button
+    Define function to detect the button click event and console log 'click'
+    Integrate the Clarifai API to console log the response on clicking the button:
+        While integrating NPM it is a good way to go into the git repo using the npm site and find the Model(API related MACROS) in the index.js of the src code.
+
+3. Building the FaceRecognition Component:
+    Simply display the sample image at first.
+    Change the state input field to the value typed in the blank using setState
+    Change the state url field to the value grabbed by the input field using setState
+    Pass the setted imageUrl field to the FaceRecognition component
+    Console logging bounding box parameters from the response
+    keeping the ratios constant
+
+
+
+
 
