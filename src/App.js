@@ -30,7 +30,28 @@ class App extends Component {
     this.state = {
       input: '',
       imageUrl: '',
+      box: {},
     }
+  }
+
+  // TODO: Modify to include multiple boxes
+
+  calculateFaceLocation = (data) => {
+    const clarifaiFace = data.outputs[0].data.regions[0].region_info.bounding_box;
+    const image = document.getElementById('inputImage');
+    const width = Number(image.width);
+    const height = Number(image.height);
+    return{
+      leftCol: clarifaiFace.left_col * width,
+      topRow: clarifaiFace.top_row * height,
+      rightCol: width - (clarifaiFace.right_col * width),
+      bottomRow: height - (clarifaiFace.bottom_row * height)
+    }
+  }
+
+  displayFaceBox = (box) => {
+    console.log(box);
+    this.setState({box});
   }
 
   onInputChange = (event) => {
@@ -42,16 +63,14 @@ class App extends Component {
     app.models
       .predict(
         Clarifai.FACE_DETECT_MODEL, 
-        this.state.input)   //Here instead of ImageUrl, input is passed as it would give an error and it is an advanced topic about the way setState works
-      .then(response => {
-        console.log(response.outputs[0].data.regions[0].region_info.bounding_box);
-      })
-      .catch(err => {
-        console.log(err);
-      });
+        //Here instead of ImageUrl, input is passed as it would give an error and it is an advanced topic about the way setState works
+        this.state.input)
+      .then(response => this.displayFaceBox(this.calculateFaceLocation(response)))
+      .catch(err => console.log(err));
   }
 
   // TODO: Add Browse option to upload image from the computer.
+  // TODO: Add Preview image function.
 
   render() {
     return (
@@ -66,7 +85,7 @@ class App extends Component {
           onInputChange={this.onInputChange} 
           onButtonSubmit={this.onButtonSubmit}
         />
-        <FaceRecognition imageUrl={this.state.imageUrl}/>
+        <FaceRecognition box={this.state.box} imageUrl={this.state.imageUrl}/>
       </div>
     );
   }

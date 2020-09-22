@@ -45,7 +45,10 @@ ADDING FUNCTIONALITY IN THE App
     Console logging bounding box parameters from the response
     keeping the ratios constant
 
-
+4. Building Bounding Boxes:
+    Define the function for calculating the face box location.
+    Defining the function to display facebox.
+    
 
 
 
