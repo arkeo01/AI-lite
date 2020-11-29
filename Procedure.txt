@@ -48,7 +48,23 @@ ADDING FUNCTIONALITY IN THE App
 4. Building Bounding Boxes:
     Define the function for calculating the face box location.
     Defining the function to display facebox.
+    Call the funcions in onButtonSubmit function
+    Pass the state properties as props to the Face Recognition Component
+
+BUILDING THE SIGNIN FORM:
+
+1. Creating the Frontend for it:
+    Simply picked up the Signing form and card from the tachyons library- This library seems pretty legit, see it in detail.
+    Did some styling till it looks a bit decent.
+
+2. State Changes:
+    Added route parameter in state to identify where to route.
+
+3. Adding routeChange function:
     
+
+CONNECTING FRONT-END AND BACKEND:
+1. The main thing that is used here is the fetch calls with the server running on another port.
 
 
 
