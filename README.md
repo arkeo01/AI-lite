@@ -7,7 +7,7 @@ Enhancement can be suggested as issues
 **Face Recognition:** A link of image is to be pasted in the input field, the faces in the image would be detected using Clarifai and highlighted with rectangles.
 
 ## Tech Stack
-    * Reactjs
-    * Nodejs
-    * Express
-    * PostgreSQL
+    - Reactjs
+    - Nodejs
+    - Express
+    - PostgreSQL
