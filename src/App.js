@@ -1,4 +1,10 @@
 import React, { Component } from 'react';
+import {
+  BrowserRouter as Router,
+  Switch,
+  Route,
+  Link
+} from "react-router-dom";
 import Particles from 'react-particles-js';
 import Navigation from './components/Navigation/Navigation';
 import Signin from './components/Signin/Signin';
@@ -141,28 +147,47 @@ class App extends Component {
 
   render() {
     return (
-      <div className='App'>
+      // <div className='App'>
+      //   <Particles className='particles'
+      //     params={particlesOptions}
+      //   />
+      //   <Navigation isSignedIn={this.state.isSignedIn} onRouteChange={this.onRouteChange}/>
+      //   {this.state.route === 'home'
+      //     ? <div>
+      //         <Logo />
+      //         <Rank  name={this.state.user.name} entries={this.state.user.entries} />
+      //         <ImageLinkForm 
+      //           onInputChange={this.onInputChange}
+      //           onImageSubmit={this.onImageSubmit}
+      //         />
+      //         <FaceRecognition box={this.state.box} imageUrl={this.state.imageUrl}/>
+      //       </div>
+      //     : (
+      //       this.state.route ==='signin'
+      //       ? <Signin loadUser={this.loadUser} onRouteChange={this.onRouteChange}/>
+      //       : <Register loadUser={this.loadUser} onRouteChange={this.onRouteChange}/>
+      //     )
+      //   }
+      // </div>
+      <Router> 
         <Particles className='particles'
           params={particlesOptions}
         />
         <Navigation isSignedIn={this.state.isSignedIn} onRouteChange={this.onRouteChange}/>
-        {this.state.route === 'home'
-          ? <div>
-              <Logo />
-              <Rank  name={this.state.user.name} entries={this.state.user.entries} />
-              <ImageLinkForm 
-                onInputChange={this.onInputChange}
-                onImageSubmit={this.onImageSubmit}
-              />
-              <FaceRecognition box={this.state.box} imageUrl={this.state.imageUrl}/>
-            </div>
-          : (
-            this.state.route ==='signin'
-            ? <Signin loadUser={this.loadUser} onRouteChange={this.onRouteChange}/>
-            : <Register loadUser={this.loadUser} onRouteChange={this.onRouteChange}/>
-          )
-        }
-      </div>
+
+        <Route 
+          path="/signin"
+          render={(props) => (    //Notice the rounded brackets instead of square brackets
+            <Signin {...props} loadUser={this.loadUser} onRouteChange={this.onRouteChange}/>
+          )}
+          />
+        <Route 
+          path="/register"
+          render={(props) => (
+            <Register {...props} loadUser={this.loadUser} onRouteChange={this.onRouteChange}/>
+          )}
+        />
+      </Router>
     );
   }
 }
