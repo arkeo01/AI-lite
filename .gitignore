@@ -24,3 +24,5 @@ yarn-error.log*
 Procedure.txt
 
 package-lock.json
+
+src/creds.js

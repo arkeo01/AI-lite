@@ -11,9 +11,10 @@ import Register from './components/Register/Register';
 import './App.css';
 import Clarifai from 'clarifai';
 import Dashboard from './components/Dashboard/Dashboard';
+import Credentials from './creds';
 
 const app = new Clarifai.App({
-  apiKey: 'b1d71c85ebbf4f6f93aacf3080b0fe5d'
+  apiKey: Credentials.CLARIFAI_API_KEY
  });
 
 const particlesOptions = {
@@ -139,7 +140,7 @@ class App extends Component {
   }
 
   // TODO: Add Browse option to upload image from the computer.
-  // TODO: Add Preview image function.
+  // TODO: Add Preview image function, before pressing detect
 
   render() {
     return (
