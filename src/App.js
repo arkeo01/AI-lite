@@ -3,18 +3,14 @@ import {
   BrowserRouter as Router,
   Switch,
   Route,
-  Link
 } from "react-router-dom";
 import Particles from 'react-particles-js';
 import Navigation from './components/Navigation/Navigation';
 import Signin from './components/Signin/Signin';
 import Register from './components/Register/Register';
-import Logo from './components/Logo/Logo';
-import ImageLinkForm from './components/ImageLinkForm/ImageLinkForm';
-import FaceRecognition from './components/FaceRecognition/FaceRecognition';
-import Rank from './components/Rank/Rank';
 import './App.css';
 import Clarifai from 'clarifai';
+import Dashboard from './components/Dashboard/Dashboard';
 
 const app = new Clarifai.App({
   apiKey: 'b1d71c85ebbf4f6f93aacf3080b0fe5d'
@@ -130,7 +126,7 @@ class App extends Component {
       .catch(err => console.log(err));
   }
 
-  // TODO: Add method to accept and verify username and password
+  // TODO: Manage the isSigned state variable change using react-router.
 
   onRouteChange = (route) => {
     if(route === 'signin' || route === 'register'){
@@ -153,15 +149,14 @@ class App extends Component {
       //   />
       //   <Navigation isSignedIn={this.state.isSignedIn} onRouteChange={this.onRouteChange}/>
       //   {this.state.route === 'home'
-      //     ? <div>
-      //         <Logo />
-      //         <Rank  name={this.state.user.name} entries={this.state.user.entries} />
-      //         <ImageLinkForm 
-      //           onInputChange={this.onInputChange}
-      //           onImageSubmit={this.onImageSubmit}
-      //         />
-      //         <FaceRecognition box={this.state.box} imageUrl={this.state.imageUrl}/>
-      //       </div>
+      //     ? <Dashboard 
+      //         name={this.state.user.name} 
+      //         entries={this.state.user.entries} 
+      //         onInputChange={this.onInputChange} 
+      //         onImageSubmit={this.onImageSubmit} 
+      //         box={this.state.box} 
+      //         imageUrl={this.state.imageUrl}
+      //       />
       //     : (
       //       this.state.route ==='signin'
       //       ? <Signin loadUser={this.loadUser} onRouteChange={this.onRouteChange}/>
@@ -169,24 +164,48 @@ class App extends Component {
       //     )
       //   }
       // </div>
-      <Router> 
-        <Particles className='particles'
-          params={particlesOptions}
-        />
-        <Navigation isSignedIn={this.state.isSignedIn} onRouteChange={this.onRouteChange}/>
 
-        <Route 
-          path="/signin"
-          render={(props) => (    //Notice the rounded brackets instead of square brackets
-            <Signin {...props} loadUser={this.loadUser} onRouteChange={this.onRouteChange}/>
-          )}
+
+      <Router className='App'> 
+        <Route
+          path = '/'>
+          <Particles className='particles'
+            params={particlesOptions}
           />
-        <Route 
-          path="/register"
-          render={(props) => (
-            <Register {...props} loadUser={this.loadUser} onRouteChange={this.onRouteChange}/>
-          )}
-        />
+          <Navigation isSignedIn={this.state.isSignedIn} onRouteChange={this.onRouteChange}/>
+
+          {
+            this.state.route === 'home'
+              ?
+                <Route className='App'
+                  path = "/"
+                  render={(props) => (
+                    <Dashboard {...props}
+                      name={this.state.user.name} 
+                      entries={this.state.user.entries} 
+                      onInputChange={this.onInputChange} 
+                      onImageSubmit={this.onImageSubmit} 
+                      box={this.state.box} 
+                      imageUrl={this.state.imageUrl}
+                    />
+                  )}/>
+              : 
+                <Switch>
+                  <Route 
+                    path="/signin"
+                    render={(props) => (    //Notice the rounded brackets instead of square brackets
+                      <Signin {...props} loadUser={this.loadUser} onRouteChange={this.onRouteChange}/>
+                    )}
+                  />
+                  <Route 
+                    path="/register"
+                    render={(props) => (
+                      <Register {...props} loadUser={this.loadUser} onRouteChange={this.onRouteChange}/>
+                    )}
+                  />
+                </Switch>
+          }
+        </Route>
       </Router>
     );
   }
