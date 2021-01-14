@@ -37,7 +37,8 @@ class App extends Component {
     this.state = {
       input: '',
       imageUrl: '',
-      box: {},
+      // Changing to array for multiple faces
+      boxes:[],
       route: 'signin',
       isSignedIn: false,
       user: {
@@ -74,21 +75,32 @@ class App extends Component {
 
   // TODO: Modify to include multiple boxes
   calculateFaceLocation = (data) => {
-    const clarifaiFace = data.outputs[0].data.regions[0].region_info.bounding_box;
     const image = document.getElementById('inputImage');
     const width = Number(image.width);
     const height = Number(image.height);
-    return{
-      leftCol: clarifaiFace.left_col * width,
-      topRow: clarifaiFace.top_row * height,
-      rightCol: width - (clarifaiFace.right_col * width),
-      bottomRow: height - (clarifaiFace.bottom_row * height)
-    }
+    
+    const regions = data.outputs[0].data.regions;
+    const boxes = regions.map((region) => {
+      const face = region.region_info.bounding_box;
+      return{
+        leftCol: face.left_col * width,
+        topRow: face.top_row * height,
+        rightCol: width - (face.right_col * width),
+        bottomRow: height - (face.bottom_row * height)
+      }
+    });
+
+    // Multiple Face
+    // Array containing face locations object of all faces
+    return boxes;
+
   }
 
-  displayFaceBox = (box) => {
-    console.log(box);
-    this.setState({box});
+  displayFaceBox = (boxes) => {
+    console.log(boxes);
+    const newBoxes = JSON.parse(JSON.stringify(boxes));
+    // For multiple faces
+    this.setState({boxes: newBoxes});
   }
 
   onInputChange = (event) => {
@@ -155,7 +167,7 @@ class App extends Component {
       //         entries={this.state.user.entries} 
       //         onInputChange={this.onInputChange} 
       //         onImageSubmit={this.onImageSubmit} 
-      //         box={this.state.box} 
+      //         boxes={this.state.boxes} 
       //         imageUrl={this.state.imageUrl}
       //       />
       //     : (
@@ -186,7 +198,9 @@ class App extends Component {
                       entries={this.state.user.entries} 
                       onInputChange={this.onInputChange} 
                       onImageSubmit={this.onImageSubmit} 
-                      box={this.state.box} 
+                      // TODO: A quick Exercise: See how to use lifecycle methods to pass boxes[0], as initially the state is undefined
+                      // And the state comes only after the request is made.
+                      boxes={this.state.boxes}
                       imageUrl={this.state.imageUrl}
                     />
                   )}/>

@@ -4,7 +4,7 @@ import ImageLinkForm from '../ImageLinkForm/ImageLinkForm';
 import FaceRecognition from '../FaceRecognition/FaceRecognition';
 import Rank from '../Rank/Rank';
 
-const Dashboard = ({name, entries, onInputChange, onImageSubmit, box, imageUrl}) => {
+const Dashboard = ({name, entries, onInputChange, onImageSubmit, boxes, imageUrl}) => {
 	return(
 	<div className='App'>
 		<Logo />
@@ -13,7 +13,7 @@ const Dashboard = ({name, entries, onInputChange, onImageSubmit, box, imageUrl})
 			onInputChange={onInputChange}
 			onImageSubmit={onImageSubmit}
 		/>
-		<FaceRecognition box={box} imageUrl={imageUrl}/>
+		<FaceRecognition boxes={boxes} imageUrl={imageUrl}/>
 	</div>
 	);    
 }
