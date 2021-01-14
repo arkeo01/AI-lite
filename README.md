@@ -6,8 +6,13 @@ Enhancement can be suggested as issues
 ## Functionality
 **Face Recognition:** A link of image is to be pasted in the input field, the faces in the image would be detected using Clarifai and highlighted with rectangles.
 
+## Enhancements
+1. Routing using React-Router.
+2. Functionality for detection of multiple faces added.
+
 ## Tech Stack
-    - Reactjs
-    - Nodejs
-    - Express
-    - PostgreSQL
+1. Reactjs
+2. React-Router
+3. Nodejs
+4. Express
+5. PostgreSQL
