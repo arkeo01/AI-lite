@@ -104,7 +104,29 @@ class App extends Component {
   }
 
   onInputChange = (event) => {
-    this.setState({input: event.target.value});
+    console.log(event.target.value);
+    this.setState({
+      input: event.target.value,
+      imageUrl: event.target.value,
+      boxes: []
+    });
+  }
+
+  // Function to fetch image from a file input field
+  // TODO: Need to modify state according to the file input
+  getFileInput = (event) => {
+    const filePath = event.target.files[0];
+    const fileReader = new FileReader();
+    fileReader.readAsDataURL(filePath);
+    
+    fileReader.onload = (e) => {
+      console.log(e.target.result);
+      this.setState({
+        input: e.target.result,     // TODO: This doesn't work with current API Integration, Update to Clarifai Data Mode
+        imageUrl: e.target.result,
+        boxes:[]
+      })
+    }
   }
 
   onImageSubmit = () => {
@@ -156,29 +178,6 @@ class App extends Component {
 
   render() {
     return (
-      // <div className='App'>
-      //   <Particles className='particles'
-      //     params={particlesOptions}
-      //   />
-      //   <Navigation isSignedIn={this.state.isSignedIn} onRouteChange={this.onRouteChange}/>
-      //   {this.state.route === 'home'
-      //     ? <Dashboard 
-      //         name={this.state.user.name} 
-      //         entries={this.state.user.entries} 
-      //         onInputChange={this.onInputChange} 
-      //         onImageSubmit={this.onImageSubmit} 
-      //         boxes={this.state.boxes} 
-      //         imageUrl={this.state.imageUrl}
-      //       />
-      //     : (
-      //       this.state.route ==='signin'
-      //       ? <Signin loadUser={this.loadUser} onRouteChange={this.onRouteChange}/>
-      //       : <Register loadUser={this.loadUser} onRouteChange={this.onRouteChange}/>
-      //     )
-      //   }
-      // </div>
-
-
       <Router className='App'> 
         <Route
           path = '/'>
@@ -194,10 +193,11 @@ class App extends Component {
                   path = "/"
                   render={(props) => (
                     <Dashboard {...props}
-                      name={this.state.user.name} 
-                      entries={this.state.user.entries} 
-                      onInputChange={this.onInputChange} 
-                      onImageSubmit={this.onImageSubmit} 
+                      name={this.state.user.name}
+                      entries={this.state.user.entries}
+                      onInputChange={this.onInputChange}
+                      onImageSubmit={this.onImageSubmit}
+                      getFileInput={this.getFileInput}
                       // TODO: A quick Exercise: See how to use lifecycle methods to pass boxes[0], as initially the state is undefined
                       // And the state comes only after the request is made.
                       boxes={this.state.boxes}

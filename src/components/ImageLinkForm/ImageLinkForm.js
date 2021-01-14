@@ -1,7 +1,7 @@
 import React from 'react';
 import './ImageLinkForm.css'
 
-const ImageLinkForm = ({ onInputChange, onImageSubmit }) => {
+const ImageLinkForm = ({ onInputChange, onImageSubmit, getFileInput }) => {
 	return(
 		<div>
 			<p className='f3'>
@@ -12,7 +12,13 @@ const ImageLinkForm = ({ onInputChange, onImageSubmit }) => {
 					<input className='f4 pa2 w-70 center' type="text" onChange={onInputChange}/>
 					<button 
 						className=' w-30 grow f4 link ph3 pv2 dib white bg-light-purple'
-						onClick={onImageSubmit}> detect </button>
+						onClick={onImageSubmit}
+					> 
+						detect 
+					</button>
+					{/* TODO: Enable this along with the integration of Clarifai Data Mode 
+					<input className='f4 pa2 w-70 center' type="file" onChange={getFileInput}/> */}
+
 				</div>
 			</div>
 		</div>
