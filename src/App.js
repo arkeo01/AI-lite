@@ -3,6 +3,7 @@ import {
   BrowserRouter as Router,
   Switch,
   Route,
+  Redirect,
 } from "react-router-dom";
 import Particles from 'react-particles-js';
 import Navigation from './components/Navigation/Navigation';
@@ -52,7 +53,6 @@ class App extends Component {
   }
 
   // Function for loading user
-  // TODO: Check if modifications can be done using ES6 syntax
   loadUser = (loadingUser) => {
     this.setState({
       user: {
@@ -73,7 +73,7 @@ class App extends Component {
       .then(console.log)  //same as above
   }
 
-  // TODO: Modify to include multiple boxes
+  // Calculates location of all the faces present in the image
   calculateFaceLocation = (data) => {
     const image = document.getElementById('inputImage');
     const width = Number(image.width);
@@ -113,7 +113,7 @@ class App extends Component {
   }
 
   // Function to fetch image from a file input field
-  // TODO: Need to modify state according to the file input
+  // TODO: Need to modify this.state according to the file input
   getFileInput = (event) => {
     const filePath = event.target.files[0];
     const fileReader = new FileReader();
@@ -139,6 +139,7 @@ class App extends Component {
         .then(response => {
           this.displayFaceBox(this.calculateFaceLocation(response))
           if(response) {
+          // TODO: Update Counter only when it is a different image
           fetch('http://localhost:3000/image', {
             method: 'put',
             headers: { 'Content-Type': 'application/json' },
@@ -161,8 +162,6 @@ class App extends Component {
       .catch(err => console.log(err));
   }
 
-  // TODO: Manage the isSigned state variable change using react-router.
-
   onRouteChange = (route) => {
     if(route === 'signin' || route === 'register'){
       this.setState({isSignedIn: false})
@@ -173,37 +172,37 @@ class App extends Component {
     this.setState({route});
   }
 
-  // TODO: Add Browse option to upload image from the computer.
-  // TODO: Add Preview image function, before pressing detect
-
   render() {
     return (
       <Router className='App'> 
-        <Route
-          path = '/'>
+        <Route path="/">
           <Particles className='particles'
             params={particlesOptions}
           />
           <Navigation isSignedIn={this.state.isSignedIn} onRouteChange={this.onRouteChange}/>
 
           {
-            this.state.route === 'home'
-              ?
-                <Route className='App'
-                  path = "/"
-                  render={(props) => (
-                    <Dashboard {...props}
-                      name={this.state.user.name}
-                      entries={this.state.user.entries}
-                      onInputChange={this.onInputChange}
-                      onImageSubmit={this.onImageSubmit}
-                      getFileInput={this.getFileInput}
-                      // TODO: A quick Exercise: See how to use lifecycle methods to pass boxes[0], as initially the state is undefined
-                      // And the state comes only after the request is made.
-                      boxes={this.state.boxes}
-                      imageUrl={this.state.imageUrl}
-                    />
-                  )}/>
+            this.state.isSignedIn
+              ? 
+                < Switch>
+                  <Redirect  from="/signin" to="/dashboard" />
+                  <Redirect  from="/register" to="/dashboard" />
+                  <Route className='App'
+                    path = "/dashboard"
+                    render={(props) => (
+                      <Dashboard {...props}
+                        name={this.state.user.name}
+                        entries={this.state.user.entries}
+                        onInputChange={this.onInputChange}
+                        onImageSubmit={this.onImageSubmit}
+                        getFileInput={this.getFileInput}
+                        // TODO: A quick Exercise: See how to use lifecycle methods to pass boxes[0], as initially the state is undefined
+                        // And the state comes only after the request is made.
+                        boxes={this.state.boxes}
+                        imageUrl={this.state.imageUrl}
+                      />
+                    )}/>
+                  </Switch>
               : 
                 <Switch>
                   <Route 
