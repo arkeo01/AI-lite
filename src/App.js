@@ -13,6 +13,7 @@ import './App.css';
 import Clarifai from 'clarifai';
 import Dashboard from './components/Dashboard/Dashboard';
 import Credentials from './creds';
+import RegisterFormik from './components/Register/RegisterFormik';
 
 const app = new Clarifai.App({
   apiKey: Credentials.CLARIFAI_API_KEY
@@ -215,6 +216,7 @@ class App extends Component {
                     path="/register"
                     render={(props) => (
                       <Register {...props} loadUser={this.loadUser} onRouteChange={this.onRouteChange}/>
+                      // <RegisterFormik {...props} loadUser={this.loadUser} onRouteChange={this.onRouteChange}/>
                     )}
                   />
                 </Switch>

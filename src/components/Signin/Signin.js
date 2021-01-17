@@ -76,7 +76,6 @@ class Signin extends React.Component {
                                 type="submit" 
                                 value="Sign in"
                             />
-                            {/* TODO: Fix: Don't redirect when Signin is pressed on empty email and password Fields */}
                             {/* <Link
                                 to='/dashboard'
                                 onClick={this.onSubmitSignIn}
