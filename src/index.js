@@ -5,6 +5,7 @@ import App from './App';
 import * as serviceWorker from './serviceWorker';
 import 'tachyons';
 
+// TODO: Fix the warning
 ReactDOM.render(
   <React.StrictMode>
     <App />

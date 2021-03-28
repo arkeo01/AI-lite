@@ -31,8 +31,22 @@ const particlesOptions = {
   }
 }
 
-// TODO: Migrate to Redux
+const initialState = {
+  input: '',
+  imageUrl: '',
+  boxes:[],
+  route: 'signin',
+  isSignedIn: false,
+  user: {
+    id: '',
+    name: '',
+    email: '',
+    entries: 0,
+    joined: ''
+  }
+}
 
+// TODO: Migrate to Redux
 class App extends Component {
   constructor() {
     super();
@@ -68,10 +82,10 @@ class App extends Component {
 
   // Connecting frontend to the backend
   componentDidMount() {
-    fetch('http://localhost:3000')
+    fetch('http://localhost:3000/')
       .then(response => response.json())
-      // .then(data => console.log(data))
-      .then(console.log)  //same as above
+      .then(data => console.log(data))
+      // .then(console.log)  //same as above
   }
 
   // Calculates location of all the faces present in the image
@@ -158,6 +172,7 @@ class App extends Component {
               // })
               this.setState(Object.assign(this.state.user, { entries: count }))
             })
+            .catch(console.log);
           }
         })
       .catch(err => console.log(err));
@@ -165,7 +180,7 @@ class App extends Component {
 
   onRouteChange = (route) => {
     if(route === 'signin' || route === 'register'){
-      this.setState({isSignedIn: false})
+      this.setState(initialState)
     } else if(route === 'home'){
       this.setState({isSignedIn: true})
     }
