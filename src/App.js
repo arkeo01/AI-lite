@@ -10,14 +10,8 @@ import Navigation from './components/Navigation/Navigation';
 import Signin from './components/Signin/Signin';
 import Register from './components/Register/Register';
 import './App.css';
-import Clarifai from 'clarifai';
 import Dashboard from './components/Dashboard/Dashboard';
-import Credentials from './creds';
 import RegisterFormik from './components/Register/RegisterFormik';
-
-const app = new Clarifai.App({
-  apiKey: Credentials.CLARIFAI_API_KEY
- });
 
 const particlesOptions = {
   particles: {
@@ -146,36 +140,40 @@ class App extends Component {
 
   onImageSubmit = () => {
     this.setState({imageUrl: this.state.input});
-    app.models
-      .predict(
-        Clarifai.FACE_DETECT_MODEL, 
-        //Here instead of ImageUrl, input is passed as it would give an error and it is an advanced topic about the way setState works
-        this.state.input)
-        .then(response => {
-          this.displayFaceBox(this.calculateFaceLocation(response))
-          if(response) {
-          // TODO: Update Counter only when it is a different image
-          fetch('http://localhost:3000/image', {
-            method: 'put',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({
-              id: this.state.user.id
-            })
-          })
-            .then(response => response.json())
-            .then(count => {
-              // This approach creates bugs as it creates new object with user object with just entries attribute
-              // this.setState({
-              //   user: {
-              //     entries: count
-              //   }
-              // })
-              this.setState(Object.assign(this.state.user, { entries: count }))
-            })
-            .catch(console.log);
-          }
+    fetch('http://localhost:3000/imageUrl', {
+      method: 'post',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        input: this.state.input
+      })
+    })
+    .then(response => response.json())
+    .then(response => {
+      this.displayFaceBox(this.calculateFaceLocation(response))
+      if(response) {
+      // TODO: Update Counter only when it is a different image
+      // For this you can save hash of input in db
+      fetch('http://localhost:3000/image', {
+        method: 'put',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          id: this.state.user.id
         })
-      .catch(err => console.log(err));
+      })
+        .then(response => response.json())
+        .then(count => {
+          // This approach creates bugs as it creates new object with user object with just entries attribute
+          // this.setState({
+          //   user: {
+          //     entries: count
+          //   }
+          // })
+          this.setState(Object.assign(this.state.user, { entries: count }))
+        })
+        .catch(console.log);
+      }
+    })
+    .catch(err => console.log(err));
   }
 
   onRouteChange = (route) => {
