@@ -181,7 +181,7 @@ class App extends Component {
             params={particlesOptions}
           />
           <Navigation isSignedIn={this.state.isSignedIn} onRouteChange={this.onRouteChange}/>
-
+          {/* TODO: Add Landing Page Code here */}
           {
             this.state.isSignedIn
               ? 
