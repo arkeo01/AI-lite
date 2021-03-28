@@ -76,7 +76,7 @@ class App extends Component {
 
   // Connecting frontend to the backend
   componentDidMount() {
-    fetch('http://localhost:3000/')
+    fetch('https://quiet-waters-14359.herokuapp.com/')
       .then(response => response.json())
       .then(data => console.log(data))
       // .then(console.log)  //same as above
@@ -140,7 +140,7 @@ class App extends Component {
 
   onImageSubmit = () => {
     this.setState({imageUrl: this.state.input});
-    fetch('http://localhost:3000/imageUrl', {
+    fetch('https://quiet-waters-14359.herokuapp.com/imageUrl', {
       method: 'post',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
@@ -153,7 +153,7 @@ class App extends Component {
       if(response) {
       // TODO: Update Counter only when it is a different image
       // For this you can save hash of input in db
-      fetch('http://localhost:3000/image', {
+      fetch('https://quiet-waters-14359.herokuapp.com/image', {
         method: 'put',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({

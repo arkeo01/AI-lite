@@ -27,7 +27,7 @@ class Register extends React.Component {
     // TODO: Think solution of this repetitive copy. Maybe React-router
     // TODO: Implement rejection of empty fields while registering
     onSubmitRegister = () =>{
-        fetch('http://localhost:3000/register', {
+        fetch('https://quiet-waters-14359.herokuapp.com/register', {
             method: 'post',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({
